@@ -1,0 +1,91 @@
+name: Build APK TEST
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC
+    env:
+      GH_TOKEN: ${{ secrets.MY_TOKEN }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Golang
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22.1'
+        cache: false
+
+    - name: Install gomobile
+      run: |
+        go install golang.org/x/mobile/cmd/gomobile@latest
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+    - name: Setup Android environment
+      uses: android-actions/setup-android@v3
+
+    - name: Clone
+      run: |
+        git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+
+    - name: Build project
+      run: |
+        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        chmod 777 *
+        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/V2rayNG/gradle.properties
+        ./gradlew --no-daemon build
+
+    - name: Build APK RELEASE
+      run: |
+        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        chmod 777 *
+        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/V2rayNG/gradle.properties
+        ./gradlew assembleRelease
+
+    - name: Sign APK
+      run: |
+        echo "=============================="
+        ls ${{ github.workspace }}/v2rayNG/V2rayNG/
+        echo "=============================="
+        ls ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/
+        sudo apt-get -y install apksigner
+        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*all.apk
+        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
+        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
+
+    - name: Upload APK all variant
+      uses: actions/upload-artifact@v4
+      with:
+        name: all
+        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*all.apk
+
+    - name: Upload APK variant arm64
+      uses: actions/upload-artifact@v4
+      with:
+        name: arm64
+        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
+
+    - name: Upload APK variant armeabi-v7a
+      uses: actions/upload-artifact@v4
+      with:
+        name: armeabi-v7a
+        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
