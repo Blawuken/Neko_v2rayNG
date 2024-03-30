@@ -47,8 +47,8 @@ jobs:
         git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
         mkdir ${{ github.workspace }}/v2rayNG/build
         cd ${{ github.workspace }}/v2rayNG/build
-        git clone --depth=1 https://github.com/2dust/AndroidLibV2rayLite.git
-        cd AndroidLibV2rayLite
+        git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
+        cd AndroidLibXrayLite
         go get github.com/xtls/xray-core@main || true
         gomobile init
         go mod tidy -v
