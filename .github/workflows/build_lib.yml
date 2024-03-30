@@ -47,20 +47,20 @@ jobs:
         git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
         mkdir ${{ github.workspace }}/v2rayNG/build
         cd ${{ github.workspace }}/v2rayNG/build
-        git clone --depth=1 -b main https://github.com/2dust/AndroidLibXrayLite.git
-        cd AndroidLibXrayLite
+        git clone --depth=1 -b main https://github.com/2dust/AndroidLibV2rayLite.git
+        cd AndroidLibV2rayLite
         go get github.com/xtls/xray-core@main || true
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
-        cp *.aar ${{ github.workspace }}/v2rayNG/V2rayNG/app/libs/
+        cp *.aar ${{ github.workspace }}/v2rayNG/app/libs/
         echo "======================================="
         ls -all
         echo "======================================="
 
     - name: Update library
       run: |
-        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        cd ${{ github.workspace }}/v2rayNG
         git config --global user.email jarbull87@gmail.com
         git config --global user.name Blawuken
         export anjay=date

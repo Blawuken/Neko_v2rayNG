@@ -48,26 +48,26 @@ jobs:
 
     - name: Build project
       run: |
-        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        cd ${{ github.workspace }}/v2rayNG
         chmod 777 *
-        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/V2rayNG/gradle.properties
+        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/gradle.properties
         ./gradlew --no-daemon build
 
     - name: Build APK RELEASE
       run: |
-        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        cd ${{ github.workspace }}/v2rayNG
         chmod 777 *
-        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/V2rayNG/gradle.properties
+        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/gradle.properties
         ./gradlew assembleRelease
 
     - name: Sign APK
       run: |
         echo "=============================="
-        ls ${{ github.workspace }}/v2rayNG/V2rayNG/
+        ls ${{ github.workspace }}/v2rayNG/
         echo "=============================="
-        ls ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/
+        ls ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/
         sudo apt-get -y install apksigner
-        cd ${{ github.workspace }}/v2rayNG/V2rayNG
+        cd ${{ github.workspace }}/v2rayNG
         apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*all.apk
         apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
         apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
@@ -76,16 +76,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: all
-        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*all.apk
+        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*all.apk
 
     - name: Upload APK variant arm64
       uses: actions/upload-artifact@v4
       with:
         name: arm64
-        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
+        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
 
     - name: Upload APK variant armeabi-v7a
       uses: actions/upload-artifact@v4
       with:
         name: armeabi-v7a
-        path: ${{ github.workspace }}/v2rayNG/V2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
+        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
