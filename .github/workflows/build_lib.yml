@@ -63,7 +63,7 @@ jobs:
         cd ${{ github.workspace }}/v2rayNG
         git config --global user.email jarbull87@gmail.com
         git config --global user.name Blawuken
-        export anjay=date
-        git add . -f
-        git commit -m "Update libcore library $anjay"
+        rel_date="$(date "+%Y%m%d")" # ISO 8601 format
+        git add ${{ github.workspace }}/v2rayNG/app/libs/libv2ray.aar
+        git commit -m "Core: Bump to $rel_date build"
         git push
