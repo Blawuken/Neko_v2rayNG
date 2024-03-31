@@ -16,76 +16,105 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       id-token: write # to enable use of OIDC
     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GH_TOKEN: ${{ secrets.MY_TOKEN }}
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup Golang
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.22.1'
-        cache: false
+      - name: JDK Setup
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
 
-    - name: Install gomobile
-      run: |
-        go install golang.org/x/mobile/cmd/gomobile@latest
-        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+      - name: "Gradle Wrapper validation"
+        uses: gradle/wrapper-validation-action@v2
 
-    - name: Setup Android environment
-      uses: android-actions/setup-android@v3
+      - name: "Setup Gradle"
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.6
+          build-root-directory: systems/commons
+          cache-disabled: false
+          cache-read-only: false
+          cache-write-only: false
+          cache-overwrite-existing: false
+          gradle-home-cache-includes: caches notifications
 
-    - name: Clone
-      run: |
-        git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
+          gradle-home-cache-cleanup: false
+          add-job-summary: always
+          add-job-summary-as-pr-comment: never
+          dependency-graph: disabled
+          dependency-graph-continue-on-failure: true
+          build-scan-publish: false
+          generate-job-summary: true
+          gradle-home-cache-strict-match: false
+          workflow-job-context: null
 
-    - name: Build project
-      run: |
-        cd ${{ github.workspace }}/v2rayNG
-        chmod 777 *
-        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/gradle.properties
-        ./gradlew --no-daemon build
+      - name: "Setup matchers"
+        run: |
+          # Setting up matchers...
 
-    - name: Build APK RELEASE
-      run: |
-        cd ${{ github.workspace }}/v2rayNG
-        chmod 777 *
-        sed -i 's/org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/org.gradle.jvmargs=-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8/' ${{ github.workspace }}/v2rayNG/gradle.properties
-        ./gradlew assembleRelease
+          matchers_dir='${{ github.workspace }}/.github/matchers'
+          matcher_list()
+          {
+            echo 'gradle-build-matcher.json'
+            echo 'gradle-build-kotlin-error-matcher.json'
+          }
 
-    - name: Sign APK
-      run: |
-        echo "=============================="
-        ls ${{ github.workspace }}/v2rayNG/
-        echo "=============================="
-        ls ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/
-        sudo apt-get -y install apksigner
-        cd ${{ github.workspace }}/v2rayNG
-        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*all.apk
-        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
-        apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
+          matcher_list | while IFS='' read -r NAME; do
+            if test -f "${matchers_dir:?}/${NAME:?}"; then
+              echo "::add-matcher::${matchers_dir:?}/${NAME:?}"
+              echo "Matcher configured: ${NAME:?}"
+            fi
+          done
 
-    - name: Upload APK all variant
-      uses: actions/upload-artifact@v4
-      with:
-        name: all
-        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*all.apk
+      - name: Clone
+        run: |
+          git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
 
-    - name: Upload APK variant arm64
-      uses: actions/upload-artifact@v4
-      with:
-        name: arm64
-        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
+      - name: Build project
+        run: |
+          cd ${{ github.workspace }}/v2rayNG
+          ./gradlew --no-daemon build
 
-    - name: Upload APK variant armeabi-v7a
-      uses: actions/upload-artifact@v4
-      with:
-        name: armeabi-v7a
-        path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
+      - name: Build APK RELEASE
+        run: |
+          cd ${{ github.workspace }}/v2rayNG
+          ./gradlew assembleRelease
+
+      - name: Sign APK
+        run: |
+          echo "=============================="
+          ls ${{ github.workspace }}/v2rayNG/
+          echo "=============================="
+          ls ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/
+          echo "=============================="
+          echo ""
+          echo ""
+          sudo apt-get -y install apksigner
+          cd ${{ github.workspace }}/v2rayNG
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*all.apk
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
+
+      - name: Upload APK all variant
+        uses: actions/upload-artifact@v4
+        with:
+          name: all
+          path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*all.apk
+
+      - name: Upload APK variant arm64
+        uses: actions/upload-artifact@v4
+        with:
+          name: arm64
+          path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
+
+      - name: Upload APK variant armeabi-v7a
+        uses: actions/upload-artifact@v4
+        with:
+          name: armeabi-v7a
+          path: ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
