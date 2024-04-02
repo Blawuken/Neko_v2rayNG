@@ -1,7 +1,4 @@
-Initial commit
-More small layout changes
-Add observatory to V2rayConfig
-Move BroadcastReceiver from ViewModel to View
-Move Toasts handling from ViewModel to View layer.
-Fixed UnspecifiedRegisterReceiverFlag
-Update lib Xray-core v1.8.10
+**Changelog**
+➥ More bug fixed
+➥ Relayout about preference
+➥ Bump dependency
