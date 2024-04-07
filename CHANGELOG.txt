@@ -1,4 +1,9 @@
 **Changelog**
+➥ Change animation expandablelayout view Horizontal to vertical
+➥ Change About serial info to Baseband versions
+➥ Change more banner image
+➥ Move Back Toasts handling from View layer to ViewModel.
+➥ Update dependency com.tencent:mmkv-static v1.3.3 => v1.3.4
+➥ Core Bump to 20240403 build
+➥ Add indonesian language (BETA)
 ➥ More bug fixed
-➥ Relayout about preference
-➥ Bump dependency
