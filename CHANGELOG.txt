@@ -1,9 +1,17 @@
 **Changelog**
-➥ Change animation expandablelayout view Horizontal to vertical
-➥ Change About serial info to Baseband versions
-➥ Change more banner image
-➥ Move Back Toasts handling from View layer to ViewModel.
-➥ Update dependency com.tencent:mmkv-static v1.3.3 => v1.3.4
-➥ Core Bump to 20240403 build
-➥ Add indonesian language (BETA)
-➥ More bug fixed
+➥ Add japanese language
+➥ Fixed title on change language
+➥ Adjust routing default rules
+➥ Remove the type of routing rule
+➥ Optimized toolbar layout
+➥ Add IpScanner
+➥ Bump com.android.application from 8.2.2 to 8.3.2
+➥ Bump com.android.library from 8.2.2 to 8.3.2
+➥ Optimized vector icon
+➥ Ability to override built in geosite.dat and geoip.dat
+➥ Retry downloading geo assets without proxy
+➥ Optimize routing
+➥ Add banner image to dialog changelog
+➥ Add IP Location
+➥ Add backup and restore configuration functionality
+➥ Core: Bump to 20240416 build
