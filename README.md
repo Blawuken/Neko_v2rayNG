@@ -11,6 +11,9 @@
 
 </details>
 
+## Neko v2rayNG Translation
+[Neko v2rayNG Translation](https://github.com/Blawuken/Neko_v2rayNG_language) Request your language for Neko v2rayNG
+
 **Credits**
 
 [Milim Nava ᓚᘏᗢ #KeepLewd](https://t.me/milimnavaUwU) For inspiration styling
