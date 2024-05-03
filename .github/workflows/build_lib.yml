@@ -49,7 +49,7 @@ jobs:
         cd ${{ github.workspace }}/v2rayNG/build
         git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
         cd AndroidLibXrayLite
-        go get github.com/xtls/xray-core@v1.8.11 || true
+        go get github.com/xtls/xray-core@main || true
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
