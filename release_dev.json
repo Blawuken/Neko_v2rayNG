@@ -1,0 +1,29 @@
+{
+  "latestVersion": "2.0.7",
+  "latestVersionCode": 1000307,
+  "url": "https://github.com/Blawuken/Neko_v2rayNG/releases/latest",
+  "releaseNotes": [
+    "",
+    "𝒩ℯ𝓀ℴ 𝓋2𝓇𝒶𝓎𝒩𝒢 2.0.7",
+    "𝗕𝘂𝗶𝗹𝗱 𝗗𝗮𝘁𝗲: 23 juni 2050",
+    "",
+    "꒰📝~𝗖𝗵𝗮𝗻𝗴𝗲𝗹𝗼𝗴:~꒱ೄྀ࿐ˊˎ-",
+    "• Redesign style FloatingActionButton",
+    "• style:optimize UI logic",
+    "• Bump androidx.activity:activity-ktx from 1.8.2 to 1.9.0",
+    "• Bump androidx.core:core-ktx from 1.12.0 to 1.13.0",
+    "• update dialog in check Update App",
+    "• Optimized dialog animation",
+    "• Add report issue activity",
+    "• Adjust UI",
+    "• Update AutoMarqueeTextView",
+    "• Optimized HostToIp activity",
+    "• Adjust Button text color vpn dialog",
+    "• Add ignore battery optimizations card",
+    "• Update splash and cgange banner image",
+    "• Add Auto Test and Connect Feature",
+    "• Bump org.kohsuke:github-api from 1.318 to 1.321",
+    "• Add dialog no internet connection",
+    "• Little bug fixed"
+  ]
+}
