@@ -1,18 +1,27 @@
-**Changelog**
-➥ Redesign style FloatingActionButton
-➥ style:optimize UI logic
-➥ Bump androidx.activity:activity-ktx from 1.8.2 to 1.9.0
-➥ Bump androidx.core:core-ktx from 1.12.0 to 1.13.0
-➥ update dialog in check Update App
-➥ Optimized dialog animation
-➥ Add report issue activity
-➥ Adjust UI
-➥ Update AutoMarqueeTextView
-➥ Optimized HostToIp activity
-➥ Adjust Button text color vpn dialog
-➥ Add ignore battery optimizations card
-➥ Update splash and cgange banner image
-➥ Add Auto Test and Connect Feature
-➥ Bump org.kohsuke:github-api from 1.318 to 1.321
-➥ Add dialog no internet connection
-➥ Little bug fixed
+**CHANGELOG**
+• Add more language
+    - Arabic
+    - Persian
+    - Sunda
+    - Russian
+    - Vietnamese
+    - Chinese,
+• Added feature Share configuration in backup file configuration,
+• Added HostName Checker,
+• Update grettings text for more language,
+• Rule start with ext and contains geoip added to the ips,
+• Adjust DNS hardcoded geoip:cn issue,
+• Add attributes to grpc,
+• Add Switchpreference routeOnly,
+• Redesign drawer layout,
+• Added attempt to update subscription via proxy,
+• Change Feedback to License preference,
+• Bump Dependency
+    - Bump com.android.library from 8.3.2 to 8.4.0
+    - Bump com.android.application from 8.3.2 to 8.4.0
+    - Bump androidx.viewpager2:viewpager2 from 1.1.0-beta02 to 1.1.0-rc01
+    - Bump androidx.core:core-ktx from 1.13.0 to 1.13.1
+    - Bump androidx.webkit:webkit from 1.10.0 to 1.11.0
+    - Bump androidx.fragment:fragment-ktx from 1.6.2 to 1.7.0
+    - Bump com.google.android.material:material from 1.11.0 to 1.12.0
+    - Bump io.github.g00fy2.quickie:quickie-bundled from 1.9.0 to 1.10.0
