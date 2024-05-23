@@ -7,8 +7,13 @@
 <details>
   <summary>ScreenShoot</summary>
 
+**Light**
 ![Screenshot](https://raw.githubusercontent.com/Blawuken/Neko_v2rayNG/main/image/screenshoot1.png)
 ![Screenshot](https://raw.githubusercontent.com/Blawuken/Neko_v2rayNG/main/image/screenshoot2.png)
+
+**Dark**
+![Screenshot](https://raw.githubusercontent.com/Blawuken/Neko_v2rayNG/main/image/screenshoot3.png)
+![Screenshot](https://raw.githubusercontent.com/Blawuken/Neko_v2rayNG/main/image/screenshoot4.png)
 
 </details>
 
