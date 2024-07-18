@@ -1,4 +1,6 @@
 version: 2
+orbs:
+  go: circleci/go@1.7.3
 jobs:
   build:
     environment:
