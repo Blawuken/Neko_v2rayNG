@@ -1,4 +1,4 @@
-name: Building dependencies
+name: Dependencies
 
 on:
   workflow_dispatch:
@@ -17,6 +17,7 @@ jobs:
       id-token: write # to enable use of OIDC
     env:
       GH_TOKEN: ${{ secrets.MY_TOKEN }}
+      CORE_VERSION: "v1.8.19"
 
     steps:
     - name: Checkout code
@@ -31,7 +32,7 @@ jobs:
     - name: Setup Golang
       uses: actions/setup-go@v5
       with:
-        go-version: '1.22.2'
+        go-version: '^1.22.2'
         cache: false
 
     - name: Install gomobile
@@ -49,21 +50,17 @@ jobs:
         cd ${{ github.workspace }}/v2rayNG/build
         git clone --depth=1 https://github.com/2dust/AndroidLibXrayLite
         cd AndroidLibXrayLite
-        go get github.com/xtls/xray-core@v1.8.11 || true
+        go get github.com/xtls/xray-core@${CORE_VERSION} || true
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 27 -ldflags='-s -w' ./
         cp *.aar ${{ github.workspace }}/v2rayNG/app/libs/
-        echo "======================================="
-        ls -all
-        echo "======================================="
 
     - name: Update library
       run: |
         cd ${{ github.workspace }}/v2rayNG
         git config --global user.email jarbull87@gmail.com
         git config --global user.name Blawuken
-        rel_date="$(date "+%Y%m%d")" # ISO 8601 format
         git add ${{ github.workspace }}/v2rayNG/app/libs/libv2ray.aar
-        git commit -m "Core: Bump to $rel_date build"
+        git commit -m "Core: Bump $CORE_VERSION"
         git push

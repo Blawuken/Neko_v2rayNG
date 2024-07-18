@@ -24,7 +24,6 @@ jobs:
           name: Sign
           command: |
               cd v2rayNG
-              apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*all.apk
               apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
               apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
       - store_artifacts:

@@ -32,48 +32,6 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: "Gradle Wrapper validation"
-        uses: gradle/actions/wrapper-validation@v3
-
-      - name: "Setup Gradle"
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: 8.7
-          build-root-directory: systems/commons
-          cache-disabled: false
-          cache-read-only: false
-          cache-write-only: false
-          cache-overwrite-existing: false
-          gradle-home-cache-includes: caches notifications
-
-          gradle-home-cache-cleanup: false
-          add-job-summary: always
-          add-job-summary-as-pr-comment: never
-          dependency-graph: disabled
-          dependency-graph-continue-on-failure: true
-          build-scan-publish: false
-          generate-job-summary: true
-          gradle-home-cache-strict-match: false
-          workflow-job-context: null
-
-      - name: "Setup matchers"
-        run: |
-          # Setting up matchers...
-
-          matchers_dir='${{ github.workspace }}/.github/matchers'
-          matcher_list()
-          {
-            echo 'gradle-build-matcher.json'
-            echo 'gradle-build-kotlin-error-matcher.json'
-          }
-
-          matcher_list | while IFS='' read -r NAME; do
-            if test -f "${matchers_dir:?}/${NAME:?}"; then
-              echo "::add-matcher::${matchers_dir:?}/${NAME:?}"
-              echo "Matcher configured: ${NAME:?}"
-            fi
-          done
-
       - name: Clone
         run: |
           git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
@@ -82,20 +40,27 @@ jobs:
         run: |
           cd ${{ github.workspace }}/v2rayNG
           dos2unix ./gradlew
-          ./gradlew --no-daemon assemble
+          ./gradlew assemble
 
       - name: Sign APK
         run: |
           cd ${{ github.workspace }}/v2rayNG
           apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*arm64-v8a.apk
           apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*armeabi-v7a.apk
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*x86.apk
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*x86_64.apk
+          apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*universal.apk
 
       - name: Release
         uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          repository: Blawuken/Neko_v2rayNG
           body_path: ${{ github.workspace }}/CHANGELOG.txt
           token: ${{ secrets.MY_TOKEN }}
           files: |
             ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*arm64-v8a.apk
             ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*armeabi-v7a.apk
+            ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*x86.apk
+            ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*x86_64.apk
+            ${{ github.workspace }}/v2rayNG/app/build/outputs/apk/release/*universal.apk
