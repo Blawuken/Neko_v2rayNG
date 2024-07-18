@@ -11,6 +11,7 @@ jobs:
           name: Prepare
           command: |
               sudo apt-get -y install dos2unix apksigner
+              go install github.com/tcnksm/ghr@latest
       - run:
           name: Clone
           command: git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
@@ -33,21 +34,14 @@ jobs:
           path: v2rayNG/app/build/outputs/apk/release
           destination: All
 
-  publish-github-release:
-    docker:
-      - image: cibuilds/github:0.10
-    steps:
-      - attach_workspace:
-          at: ./artifacts
       - run:
           name: "Publish Release on GitHub"
           command: |
             VERSION=$(my-binary --version)
-            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./artifacts/
+            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v2rayNG/app/build/outputs/apk/release
 
 workflows:
   version: 2
   workflow:
     jobs:
     - build
-    - publish-github-release
