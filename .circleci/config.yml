@@ -12,7 +12,7 @@ jobs:
       - run: 
           name: Prepare
           command: |
-              sudo apt-get -y install dos2unix apksigner
+              sudo apt-get -y update && apt-get -y install dos2unix apksigner golang
               go install github.com/tcnksm/ghr@latest
       - run:
           name: Clone
@@ -36,11 +36,11 @@ jobs:
           path: v2rayNG/app/build/outputs/apk/release
           destination: All
 
-      - run:
-          name: "Publish Release on GitHub"
-          command: |
-            VERSION=$(my-binary --version)
-            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v2rayNG/app/build/outputs/apk/release
+#      - run:
+#          name: "Publish Release on GitHub"
+#          command: |
+#            VERSION=$(my-binary --version)
+#            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v2rayNG/app/build/outputs/apk/release
 
 workflows:
   version: 2
