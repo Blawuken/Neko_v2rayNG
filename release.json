@@ -1,31 +1,13 @@
 {
-  "latestVersion": "1.1.5",
-  "latestVersionCode": 1000225,
-  "url": "https://sfl.gl/G7m8xiqL",
+  "latestVersion": "1.1.6",
+  "latestVersionCode": 1000226,
+  "url": "https://sfl.gl/wBbhs2RU",
   "releaseNotes": [
     "",
-    "𝒩ℯ𝓀ℴ 𝓋2𝓇𝒶𝓎𝒩𝒢 v1.1.5",
-    "𝗕𝘂𝗶𝗹𝗱 𝗗𝗮𝘁𝗲: 18 Juli 2024",
+    "𝒩ℯ𝓀ℴ 𝓋2𝓇𝒶𝓎𝒩𝒢 v1.1.6",
+    "𝗕𝘂𝗶𝗹𝗱 𝗗𝗮𝘁𝗲: 20 Juli 2024",
     "",
     "꒰📝~𝗖𝗵𝗮𝗻𝗴𝗲𝗹𝗼𝗴:~꒱ೄྀ࿐ˊˎ-",
-    "• Update Theme Engine",
-    "• Add delayed test URL",
-    "• Fixed Reading QRs from Gallery",
-    "• Redesign header darboard",
-    "• Optimized SplashScreen",
-    "• Fixed Problems occur after using Delete Invalid Configuration after speed test",
-    "• Drop IpScanner feature",
-    "• Drop auto test connection",
-    "• Use Neko Drawer style",
-    "• Refactor the parser",
-    "• Optimized code",
-    "• Auto update subscriptions when adding a url",
-    "• Hardcode gstatic.com taking detour [proxy]",
-    "• Add splithttp transport for xray",
-    "• fix wireguard issue",
-    "• Add LEANBACK_LAUNCHER",
-    "• Redesign Credits preference",
-    "• More code clean",
-    "• Core: Bump v1.8.19"
+    "• Core: Bump v1.8.20"
   ]
 }
