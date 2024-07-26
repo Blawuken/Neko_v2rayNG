@@ -9,11 +9,6 @@ jobs:
       - image: anggit86/android-sdk:latest
     steps:
       - checkout
-      - run: 
-          name: Prepare
-          command: |
-              sudo apt-get -y update && apt-get -y install dos2unix apksigner golang
-              go install github.com/tcnksm/ghr@latest
       - run:
           name: Clone
           command: git clone https://Blawuken:$GH_TOKEN@github.com/Blawuken/v2rayNG
@@ -34,12 +29,12 @@ jobs:
               apksigner sign --key platform.pk8 --cert platform.x509.pem app/build/outputs/apk/release/*universal.apk
       - store_artifacts:
           path: v2rayNG/app/build/outputs/apk/release
-          destination: All
+          destination: Neko-ray
 
 #      - run:
 #          name: "Publish Release on GitHub"
 #          command: |
-#            VERSION=$(my-binary --version)
+#            VERSION=v1.1.7
 #            ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} v2rayNG/app/build/outputs/apk/release
 
 workflows:
