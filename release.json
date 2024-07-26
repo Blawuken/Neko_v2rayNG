@@ -1,13 +1,19 @@
 {
-  "latestVersion": "1.1.6",
-  "latestVersionCode": 1000226,
-  "url": "https://sfl.gl/wBbhs2RU",
+  "latestVersion": "1.1.7",
+  "latestVersionCode": 1000227,
+  "url": "https://sfl.gl/aFYZd",
   "releaseNotes": [
     "",
-    "𝒩ℯ𝓀ℴ 𝓋2𝓇𝒶𝓎𝒩𝒢 v1.1.6",
-    "𝗕𝘂𝗶𝗹𝗱 𝗗𝗮𝘁𝗲: 20 Juli 2024",
+    "𝒩ℯ𝓀ℴ 𝓋2𝓇𝒶𝓎𝒩𝒢 v1.1.7",
+    "𝗕𝘂𝗶𝗹𝗱 𝗗𝗮𝘁𝗲: 26 Juli 2024",
     "",
     "꒰📝~𝗖𝗵𝗮𝗻𝗴𝗲𝗹𝗼𝗴:~꒱ೄྀ࿐ˊˎ-",
-    "• Core: Bump v1.8.20"
+    "• Core update v1.8.21",
+    "• Set UseIP in Direct to break the Android Private DNS dead loop",
+    "• Redesign more banner image",
+    "• Translation update",
+    "• Optimized NoInternetDialog",
+    "• Use geo asset from malikshi",
+    "• Fix trojan issue"
   ]
 }
